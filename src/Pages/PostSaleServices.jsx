@@ -66,12 +66,12 @@ const PostSalesServicesPage = () => {
                 description:
                   "Prompt resolution of customer issues to maintain satisfaction",
               },
-              {
-                icon: "🏦",
-                title: "Home Loan Assistance",
-                description:
-                  "Expert support for financing and loan processing",
-              },
+              // {
+              //   icon: "🏦",
+              //   title: "Home Loan Assistance",
+              //   description:
+              //     "Expert support for financing and loan processing",
+              // },
               {
                 icon: "🏡",
                 title: "Possession Strategy & Delivery",
