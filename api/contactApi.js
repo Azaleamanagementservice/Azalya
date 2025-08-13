@@ -5,7 +5,7 @@ import Joi from "joi";
 // -------------------------
 // ENV VARIABLES
 // -------------------------
-const { MONGODB_URI, SMTP_MAIL, SMTP_PASS } = process.env;
+const { MONGODB_URI, SMTP_MAIL, SMTP_PASS, SMTP_PORT, SECURE, SMTP_HOST } = process.env;
 
 // Validate required environment variables
 if (!MONGODB_URI || !SMTP_MAIL || !SMTP_PASS) {
@@ -260,7 +260,9 @@ const userTemplate = (userInfo) => {
 // EMAIL SENDER
 // -------------------------
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: SMTP_HOST,
+  port: SMTP_PORT,
+  secure: SECURE,
   auth: {
     user: SMTP_MAIL,
     pass: SMTP_PASS,
@@ -328,7 +330,7 @@ const handler = async (req, res) => {
       number,
       message,
     });
-    
+
     if (error) {
       console.log("Validation error:", error.details[0].message);
       return res.status(400).json({
@@ -354,7 +356,7 @@ const handler = async (req, res) => {
       number,
       message,
     });
-    
+
     await newContact.save();
     console.log("Contact saved to database:", email);
 
