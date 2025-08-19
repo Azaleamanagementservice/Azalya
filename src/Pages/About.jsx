@@ -6,8 +6,16 @@ import Hero from "../Section/Hero";
 import Image1 from "../assets/Team/Member1.jpeg";
 import Image2 from "../assets/Team/Member2.jpeg";
 import Mainlayout from "../Section/Mainlayout";
+import { HeadProvider, Link, Meta, Title } from "react-head";
 function About() {
-  return (
+  return (<>
+       <HeadProvider>
+          <Title>About Azalea Services | Trusted Property Management Partner</Title>
+          <Meta
+            name="description"
+            content="Learn about Azalea Services—our expertise in property inventory, developer support & housing society management for NRIs & communities."
+          />
+        </HeadProvider>
     <Mainlayout>
       <Hero
         isHomepage={false}
@@ -142,6 +150,7 @@ function About() {
         </div>
       </section>
     </Mainlayout>
+  </>
   );
 }
 

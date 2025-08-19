@@ -5,9 +5,17 @@ import Servicesection from "../Section/Servicesection";
 import FAQSection from "../Section/FaqSection";
 import Hero from "../Section/Hero";
 import Mainlayout from "../Section/Mainlayout";
-
+import { HeadProvider, Link, Meta, Title } from "react-head";
 const Services = () => {
-  return (
+  return (<>
+       <HeadProvider>
+        <Title>Our Services | NRI Property, Developers & Society Management</Title>
+        <Meta
+          name="description"
+          content="Explore Azalea Services: NRI property inventory management, developer post-sales support & cooperative housing society solutions."
+        />
+      </HeadProvider>
+  
     <Mainlayout>
       <Hero
         isHomepage={false}
@@ -18,6 +26,7 @@ const Services = () => {
       <Servicesection isServiceNavigation={true} />
       <FAQSection />
     </Mainlayout>
+  </>
   );
 };
 

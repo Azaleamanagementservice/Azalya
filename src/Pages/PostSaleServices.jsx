@@ -5,13 +5,20 @@ import Contactsection from "../Section/Contactsection";
 import { memo } from "react";
 import FaqSection from "../Section/FaqSection";
 import { useDispatch } from "react-redux";
-
+import { HeadProvider, Link, Meta, Title } from "react-head";
 const PostSalesServicesPage = () => {
     const disp=useDispatch()
      const toggleOpen = () => {
     disp({ type: "open" });
   };
-  return (
+  return (<>
+    <HeadProvider>
+          <Title>Developer Post-Sales Support Services | Azalea</Title>
+          <Meta
+            name="description"
+            content="Seamless handovers, snag lists, documentation & client communication. Azalea helps developers reduce friction & build stronger trust."
+          />
+        </HeadProvider>
     <Mainlayout>
       {/* Hero Section - Enhanced with engaging visuals */}
       <Hero
@@ -247,6 +254,7 @@ const PostSalesServicesPage = () => {
       {/* Contact Section */}
       <Contactsection shouldMapShow={true} />
     </Mainlayout>
+  </>
   );
 };
 
