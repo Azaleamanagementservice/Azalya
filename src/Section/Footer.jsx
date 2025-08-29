@@ -33,7 +33,7 @@ const Footer = () => {
               </p>
               <div className="flex gap-3">
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/company/azalea-management-services-llp/"
                   className="bg-green-900 hover:bg-green-800 p-2.5 rounded-full text-white transition-colors duration-300"
                   aria-label="LinkedIn"
                 >
