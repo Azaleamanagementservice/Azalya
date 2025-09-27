@@ -26,7 +26,10 @@ const Footer = () => {
                 className="h-28 mb-4"
                 loading="lazy"
               />
-              <h2 className="text-base font-semibold">	Your Property, Our Priority—with Care and Clarity.</h2>
+              <h2 className="text-base font-semibold">
+                {" "}
+                Your Property, Our Priority—with Care and Clarity.
+              </h2>
               <p className="text-gray-700 text-sm leading-relaxed mb-6">
                 Azalea Management Services LLP is a Start Up India certified
                 company recognized by DPIIT
@@ -93,10 +96,11 @@ const Footer = () => {
                     size={14}
                   />
                   <a
-                    href="mailto:contact@azaleaservices.co.in"
+                    href="mailto:
+connect@azaleaservices.co.in"
                     className="text-sm hover:underline text-gray-700 hover:text-green-900 transition-colors duration-200"
                   >
-                    contact@azaleaservices.co.in
+                    connect@azaleaservices.co.in
                   </a>
                 </div>
                 <div className="flex items-center gap-3">

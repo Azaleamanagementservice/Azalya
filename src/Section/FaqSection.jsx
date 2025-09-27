@@ -73,10 +73,12 @@ const FAQSection = () => {
         <>
           Contact us at{" "}
           <a
-            href="mailto:contact@azaleaservices.co.in"
+            href="mailto:
+connect@azaleaservices.co.in"
             className="text-[#187530] font-medium underline hover:text-green-800 transition-colors"
           >
-            contact@azaleaservices.co.in
+            
+connect@azaleaservices.co.in
           </a>{" "}
           or tap the “Request Consultation” button for responsive, personalized
           support.

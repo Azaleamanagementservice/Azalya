@@ -5,7 +5,8 @@ import Joi from "joi";
 // -------------------------
 // ENV VARIABLES
 // -------------------------
-const { MONGODB_URI, SMTP_MAIL, SMTP_PASS, SMTP_PORT, SECURE, SMTP_HOST } = process.env;
+const { MONGODB_URI, SMTP_MAIL, SMTP_PASS, SMTP_PORT, SECURE, SMTP_HOST } =
+  process.env;
 
 // Validate required environment variables
 if (!MONGODB_URI || !SMTP_MAIL || !SMTP_PASS) {
@@ -39,9 +40,14 @@ async function dbConnect(retries = 3, delay = 1000) {
       console.log("MongoDB connected successfully");
       return cached.conn;
     } catch (error) {
-      console.error(`MongoDB connection attempt ${attempt} failed:`, error.message);
+      console.error(
+        `MongoDB connection attempt ${attempt} failed:`,
+        error.message
+      );
       if (attempt === retries)
-        throw new Error(`MongoDB connection failed after ${retries} attempts: ${error.message}`);
+        throw new Error(
+          `MongoDB connection failed after ${retries} attempts: ${error.message}`
+        );
       await new Promise((resolve) => setTimeout(resolve, delay * attempt));
     }
   }
@@ -150,15 +156,23 @@ const firmTemplate = (userInfo) => {
               <td style="color: #333; padding: 12px 0; border-bottom: 1px solid #e9ecef;"><a href="mailto:${email}" style="color: #187530; text-decoration: none;">${email}</a></td>
             </tr>
             <tr>
-              <td style="font-weight: 600; color: #187530; width: 30%; padding: 12px 0; ${message ? 'border-bottom: 1px solid #e9ecef;' : ''}">Phone:</td>
-              <td style="color: #333; padding: 12px 0; ${message ? 'border-bottom: 1px solid #e9ecef;' : ''}"><a href="tel:${number}" style="color: #187530; text-decoration: none;">${number}</a></td>
+              <td style="font-weight: 600; color: #187530; width: 30%; padding: 12px 0; ${
+                message ? "border-bottom: 1px solid #e9ecef;" : ""
+              }">Phone:</td>
+              <td style="color: #333; padding: 12px 0; ${
+                message ? "border-bottom: 1px solid #e9ecef;" : ""
+              }"><a href="tel:${number}" style="color: #187530; text-decoration: none;">${number}</a></td>
             </tr>
-            ${message ? `
+            ${
+              message
+                ? `
             <tr>
               <td style="font-weight: 600; color: #187530; width: 30%; padding: 12px 0; vertical-align: top;">Message:</td>
               <td style="color: #333; padding: 12px 0; line-height: 1.6;">${message}</td>
             </tr>
-            ` : ''}
+            `
+                : ""
+            }
           </table>
         </div>
         
@@ -260,17 +274,13 @@ const userTemplate = (userInfo) => {
 // EMAIL SENDER
 // -------------------------
 const transporter = nodemailer.createTransport({
-  host: SMTP_HOST,
-  port: SMTP_PORT,
-  secure: SECURE,
+  host: "smtp.gmail.com",
+  port: 465, // or 587
+  secure: true, // true for 465, false for 587
   auth: {
-    user: SMTP_MAIL,
-    pass: SMTP_PASS,
+    user: process.env.SMTP_MAIL, // e.g. info@yourdomain.com
+    pass: process.env.SMTP_PASS, // App password
   },
-  pool: true,
-  maxConnections: 1,
-  rateDelta: 20000,
-  rateLimit: 10,
 });
 
 // Verify transporter configuration at startup
@@ -304,12 +314,12 @@ async function sendMailWithRetry(from, to, subject, html, retries = 3) {
 // -------------------------
 const handler = async (req, res) => {
   // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   // Handle preflight requests
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
@@ -407,8 +417,8 @@ const handler = async (req, res) => {
           email,
           number,
           message: message || null,
-          submittedAt: new Date().toISOString()
-        }
+          submittedAt: new Date().toISOString(),
+        },
       });
     } else {
       res.status(201).json({
@@ -420,8 +430,8 @@ const handler = async (req, res) => {
           email,
           number,
           message: message || null,
-          submittedAt: new Date().toISOString()
-        }
+          submittedAt: new Date().toISOString(),
+        },
       });
     }
   } catch (err) {
