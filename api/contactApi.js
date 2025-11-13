@@ -5,8 +5,19 @@ import Joi from "joi";
 // -------------------------
 // ENV VARIABLES
 // -------------------------
-const { MONGODB_URI, SMTP_MAIL, SMTP_PASS, SMTP_PORT, SECURE, SMTP_HOST } =
-  process.env;
+const {
+  MONGODB_URI,
+  SMTP_MAIL,
+  SMTP_PASS,
+  SMTP_PORT,
+  SECURE,
+  SMTP_HOST,
+  ZOHO_CLIENT_ID,
+  ZOHO_CLIENT_SECRET,
+  ZOHO_REFRESH_TOKEN,
+  ZOHO_ACCOUNTS_URL = "https://accounts.zoho.in",
+  ZOHO_CRM_API_URL = "https://www.zohoapis.in",
+} = process.env;
 
 // Validate required environment variables
 if (!MONGODB_URI || !SMTP_MAIL || !SMTP_PASS) {
@@ -310,6 +321,167 @@ async function sendMailWithRetry(from, to, subject, html, retries = 3) {
 }
 
 // -------------------------
+// ZOHO CRM INTEGRATION
+// -------------------------
+
+// Cache for access token to avoid unnecessary refresh calls
+let cachedAccessToken = {
+  token: null,
+  expiresAt: null,
+};
+
+/**
+ * Refresh Zoho CRM access token using refresh token
+ */
+async function refreshZohoAccessToken() {
+  try {
+    if (!ZOHO_CLIENT_ID || !ZOHO_CLIENT_SECRET || !ZOHO_REFRESH_TOKEN) {
+      console.warn(
+        "Zoho CRM credentials not configured. Skipping Zoho CRM integration."
+      );
+      return null;
+    }
+
+    const response = await fetch(`${ZOHO_ACCOUNTS_URL}/oauth/v2/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        client_id: ZOHO_CLIENT_ID,
+        client_secret: ZOHO_CLIENT_SECRET,
+        refresh_token: ZOHO_REFRESH_TOKEN,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || data.error) {
+      console.error("Failed to refresh Zoho access token:", data);
+      return null;
+    }
+
+    // Cache the token with expiration time (subtract 60 seconds for safety)
+    cachedAccessToken.token = data.access_token;
+    cachedAccessToken.expiresAt =
+      Date.now() + (data.expires_in - 60) * 1000;
+
+    console.log("Zoho access token refreshed successfully");
+    return data.access_token;
+  } catch (error) {
+    console.error("Error refreshing Zoho access token:", error.message);
+    return null;
+  }
+}
+
+/**
+ * Get valid Zoho CRM access token (refresh if needed)
+ */
+async function getZohoAccessToken() {
+  // Check if cached token is still valid
+  if (
+    cachedAccessToken.token &&
+    cachedAccessToken.expiresAt &&
+    Date.now() < cachedAccessToken.expiresAt
+  ) {
+    return cachedAccessToken.token;
+  }
+
+  // Refresh token
+  return await refreshZohoAccessToken();
+}
+
+/**
+ * Create a contact/lead in Zoho CRM
+ */
+async function createZohoContact(contactData) {
+  try {
+    const { name, email, number, message } = contactData;
+
+    // Get valid access token
+    const accessToken = await getZohoAccessToken();
+
+    if (!accessToken) {
+      console.warn("No Zoho access token available. Skipping CRM integration.");
+      return { success: false, error: "No access token" };
+    }
+
+    // Prepare lead data for Zoho CRM
+    // Split name into First Name and Last Name if possible
+    const nameParts = name.trim().split(/\s+/);
+    const firstName = nameParts.length > 1 ? nameParts[0] : name;
+    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
+
+    const zohoLeadData = {
+      data: [
+        {
+          First_Name: firstName,
+          Last_Name: lastName || firstName, // Use first name as last name if only one name provided
+          Email: email,
+          Phone: number,
+          Description: message || "Contact form submission from Azalea website",
+          Lead_Source: "Website",
+          Lead_Status: "Not Contacted",
+        },
+      ],
+    };
+
+    // Create lead in Zoho CRM
+    console.log("📤 Creating lead in Zoho CRM for:", email);
+    const response = await fetch(
+      `${ZOHO_CRM_API_URL}/crm/v3/Leads`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Zoho-oauthtoken ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(zohoLeadData),
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      // If token expired, try refreshing once more
+      if (response.status === 401) {
+        console.log("Token expired, refreshing...");
+        const newToken = await refreshZohoAccessToken();
+        if (newToken) {
+          // Retry with new token
+          const retryResponse = await fetch(
+            `${ZOHO_CRM_API_URL}/crm/v3/Leads`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Zoho-oauthtoken ${newToken}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(zohoLeadData),
+            }
+          );
+          const retryResult = await retryResponse.json();
+          if (retryResponse.ok) {
+            console.log("Contact created in Zoho CRM successfully");
+            return { success: true, data: retryResult };
+          }
+        }
+      }
+
+      console.error("Failed to create contact in Zoho CRM:", result);
+      return { success: false, error: result.message || "Unknown error" };
+    }
+
+    console.log("Contact created in Zoho CRM successfully");
+    return { success: true, data: result };
+  } catch (error) {
+    console.error("Error creating Zoho contact:", error.message);
+    return { success: false, error: error.message };
+  }
+}
+
+// -------------------------
 // API HANDLER
 // -------------------------
 const handler = async (req, res) => {
@@ -370,6 +542,44 @@ const handler = async (req, res) => {
     await newContact.save();
     console.log("Contact saved to database:", email);
 
+    // Create lead in Zoho CRM (with timeout to not block response)
+    let zohoStatus = "pending";
+    let zohoError = null;
+    
+    // Try to sync to Zoho CRM, but don't block the response
+    const zohoPromise = createZohoContact({ name, email, number, message })
+      .then((result) => {
+        if (result.success) {
+          zohoStatus = "success";
+          console.log("✅ Lead created in Zoho CRM successfully:", email);
+          if (result.data && result.data.data && result.data.data[0]) {
+            console.log("Zoho Lead ID:", result.data.data[0].id);
+          }
+        } else {
+          zohoStatus = "failed";
+          zohoError = result.error;
+          console.warn("❌ Failed to create lead in Zoho CRM:", result.error);
+        }
+      })
+      .catch((error) => {
+        zohoStatus = "failed";
+        zohoError = error.message;
+        console.error("❌ Zoho CRM sync error:", error.message);
+      });
+
+    // Wait for Zoho sync with a timeout (max 5 seconds)
+    // This ensures we try to sync but don't delay the response too much
+    Promise.race([
+      zohoPromise,
+      new Promise((resolve) => setTimeout(() => {
+        if (zohoStatus === "pending") {
+          zohoStatus = "timeout";
+          console.warn("⏱️ Zoho CRM sync timed out (still processing in background)");
+        }
+        resolve();
+      }, 5000))
+    ]).catch(() => {});
+
     // Send emails with timeout handling
     let emailStatus = "pending";
     try {
@@ -408,32 +618,28 @@ const handler = async (req, res) => {
     }
 
     // Send response based on email status
-    if (emailStatus === "sent") {
-      res.status(201).json({
-        isSuccess: true,
-        message: "Contact submitted successfully and confirmation emails sent",
-        data: {
-          name,
-          email,
-          number,
-          message: message || null,
-          submittedAt: new Date().toISOString(),
-        },
-      });
-    } else {
-      res.status(201).json({
-        isSuccess: true,
-        message: "Contact submitted successfully, but email delivery failed",
-        emailStatus: emailStatus,
-        data: {
-          name,
-          email,
-          number,
-          message: message || null,
-          submittedAt: new Date().toISOString(),
-        },
-      });
+    const responseData = {
+      isSuccess: true,
+      message: emailStatus === "sent" 
+        ? "Contact submitted successfully and confirmation emails sent"
+        : "Contact submitted successfully, but email delivery failed",
+      data: {
+        name,
+        email,
+        number,
+        message: message || null,
+        submittedAt: new Date().toISOString(),
+      },
+      emailStatus: emailStatus,
+      zohoCrmStatus: zohoStatus, // Include Zoho CRM sync status
+    };
+
+    // Add Zoho error if failed
+    if (zohoStatus === "failed" && zohoError) {
+      responseData.zohoCrmError = zohoError;
     }
+
+    res.status(201).json(responseData);
   } catch (err) {
     console.error("Contact API error:", err.message, err.stack);
     res.status(500).json({
