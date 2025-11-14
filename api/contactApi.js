@@ -428,9 +428,24 @@ async function createZohoContact(contactData) {
 
     // Prepare lead data for Zoho CRM
     // Split name into First Name and Last Name if possible
-    const nameParts = name.trim().split(/\s+/);
-    const firstName = nameParts.length > 1 ? nameParts[0] : name;
-    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
+    const trimmedName = name.trim();
+    const nameParts = trimmedName.split(/\s+/).filter(part => part.length > 0);
+    
+    let firstName = "";
+    let lastName = "";
+    
+    if (nameParts.length === 0) {
+      // Fallback if name is empty (shouldn't happen due to validation)
+      firstName = trimmedName || "Unknown";
+    } else if (nameParts.length === 1) {
+      // Single word: use as first name only
+      firstName = nameParts[0];
+      lastName = ""; // Leave last name empty
+    } else {
+      // Multiple words: first word = first name, rest = last name
+      firstName = nameParts[0];
+      lastName = nameParts.slice(1).join(" ");
+    }
 
     // Format date for Zoho CRM (YYYY-MM-DD format)
     const currentDate = new Date();
@@ -440,7 +455,7 @@ async function createZohoContact(contactData) {
       data: [
         {
           First_Name: firstName,
-          Last_Name: lastName || firstName, // Use first name as last name if only one name provided
+          Last_Name: lastName, // Empty string if only one name provided
           Email: email,
           Phone: number,
           Company: company || "", // Company name field
