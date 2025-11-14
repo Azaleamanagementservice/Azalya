@@ -393,7 +393,7 @@ async function getZohoAccessToken() {
 }
 
 /**
- * Create a contact in Zoho CRM
+ * Create a lead in Zoho CRM
  */
 async function createZohoContact(contactData) {
   try {
@@ -407,13 +407,17 @@ async function createZohoContact(contactData) {
       return { success: false, error: "No access token" };
     }
 
-    // Prepare contact data for Zoho CRM
+    // Prepare lead data for Zoho CRM
     // Split name into First Name and Last Name if possible
     const nameParts = name.trim().split(/\s+/);
     const firstName = nameParts.length > 1 ? nameParts[0] : name;
     const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
 
-    const zohoContactData = {
+    // Format date for Zoho CRM (YYYY-MM-DD format)
+    const currentDate = new Date();
+    const inquiryDate = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+    const zohoLeadData = {
       data: [
         {
           First_Name: firstName,
@@ -421,21 +425,26 @@ async function createZohoContact(contactData) {
           Email: email,
           Phone: number,
           Description: message || "Contact form submission from Azalea website",
+          Lead_Source: "Website",
+          Lead_Status: "Not Contacted",
+          // Add inquiry date - using standard date field format
+          // Note: If you have a custom date field, replace 'Inquiry_Date' with your custom field API name
+          Inquiry_Date: inquiryDate,
         },
       ],
     };
 
-    // Create contact in Zoho CRM
-    console.log("📤 Creating contact in Zoho CRM for:", email);
+    // Create lead in Zoho CRM
+    console.log("📤 Creating lead in Zoho CRM for:", email);
     const response = await fetch(
-      `${ZOHO_CRM_API_URL}/crm/v3/Contacts`,
+      `${ZOHO_CRM_API_URL}/crm/v3/Leads`,
       {
         method: "POST",
         headers: {
           Authorization: `Zoho-oauthtoken ${accessToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(zohoContactData),
+        body: JSON.stringify(zohoLeadData),
       }
     );
 
@@ -449,29 +458,29 @@ async function createZohoContact(contactData) {
         if (newToken) {
           // Retry with new token
           const retryResponse = await fetch(
-            `${ZOHO_CRM_API_URL}/crm/v3/Contacts`,
+            `${ZOHO_CRM_API_URL}/crm/v3/Leads`,
             {
               method: "POST",
               headers: {
                 Authorization: `Zoho-oauthtoken ${newToken}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(zohoContactData),
+              body: JSON.stringify(zohoLeadData),
             }
           );
           const retryResult = await retryResponse.json();
           if (retryResponse.ok) {
-            console.log("Contact created in Zoho CRM successfully");
+            console.log("Lead created in Zoho CRM successfully");
             return { success: true, data: retryResult };
           }
         }
       }
 
-      console.error("Failed to create contact in Zoho CRM:", result);
+      console.error("Failed to create lead in Zoho CRM:", result);
       return { success: false, error: result.message || "Unknown error" };
     }
 
-    console.log("Contact created in Zoho CRM successfully");
+    console.log("Lead created in Zoho CRM successfully");
     return { success: true, data: result };
   } catch (error) {
     console.error("Error creating Zoho contact:", error.message);
@@ -540,7 +549,7 @@ const handler = async (req, res) => {
     await newContact.save();
     console.log("Contact saved to database:", email);
 
-    // Create contact in Zoho CRM (with timeout to not block response)
+    // Create lead in Zoho CRM (with timeout to not block response)
     let zohoStatus = "pending";
     let zohoError = null;
     
@@ -551,14 +560,14 @@ const handler = async (req, res) => {
           .then((result) => {
             if (result.success) {
               zohoStatus = "success";
-              console.log("✅ Contact created in Zoho CRM successfully:", email);
+              console.log("✅ Lead created in Zoho CRM successfully:", email);
               if (result.data && result.data.data && result.data.data[0]) {
-                console.log("Zoho Contact ID:", result.data.data[0].id);
+                console.log("Zoho Lead ID:", result.data.data[0].id);
               }
             } else {
               zohoStatus = "failed";
               zohoError = result.error;
-              console.warn("❌ Failed to create contact in Zoho CRM:", result.error);
+              console.warn("❌ Failed to create lead in Zoho CRM:", result.error);
             }
           })
           .catch((error) => {
