@@ -85,6 +85,11 @@ const contactSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    company: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     message: {
       type: String,
       trim: true,
@@ -122,6 +127,10 @@ const contactValidationSchema = Joi.object({
         "* Phone Number must be a valid format (8-15 digits, optional spaces, hyphens, or +)",
       "any.required": "* Phone Number is required",
     }),
+  company: Joi.string().max(100).allow("").optional().messages({
+    "string.base": "* Company name must be a string",
+    "string.max": "* Company name must not exceed 100 characters",
+  }),
   message: Joi.string().max(500).allow("").optional().messages({
     "string.base": "* Message must be a string",
     "string.max": "* Message must not exceed 500 characters",
@@ -133,7 +142,7 @@ const contactValidationSchema = Joi.object({
 // -------------------------
 const firmTemplate = (userInfo) => {
   try {
-    let { name, email, message, number } = userInfo;
+    let { name, email, message, number, company } = userInfo;
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,13 +176,23 @@ const firmTemplate = (userInfo) => {
               <td style="color: #333; padding: 12px 0; border-bottom: 1px solid #e9ecef;"><a href="mailto:${email}" style="color: #187530; text-decoration: none;">${email}</a></td>
             </tr>
             <tr>
+              <td style="font-weight: 600; color: #187530; width: 30%; padding: 12px 0; border-bottom: 1px solid #e9ecef;">Phone:</td>
+              <td style="color: #333; padding: 12px 0; border-bottom: 1px solid #e9ecef;"><a href="tel:${number}" style="color: #187530; text-decoration: none;">${number}</a></td>
+            </tr>
+            ${
+              company
+                ? `
+            <tr>
               <td style="font-weight: 600; color: #187530; width: 30%; padding: 12px 0; ${
                 message ? "border-bottom: 1px solid #e9ecef;" : ""
-              }">Phone:</td>
+              }">Company:</td>
               <td style="color: #333; padding: 12px 0; ${
                 message ? "border-bottom: 1px solid #e9ecef;" : ""
-              }"><a href="tel:${number}" style="color: #187530; text-decoration: none;">${number}</a></td>
+              }">${company}</td>
             </tr>
+            `
+                : ""
+            }
             ${
               message
                 ? `
@@ -397,7 +416,7 @@ async function getZohoAccessToken() {
  */
 async function createZohoContact(contactData) {
   try {
-    const { name, email, number, message } = contactData;
+    const { name, email, number, company, message } = contactData;
 
     // Get valid access token
     const accessToken = await getZohoAccessToken();
@@ -424,6 +443,7 @@ async function createZohoContact(contactData) {
           Last_Name: lastName || firstName, // Use first name as last name if only one name provided
           Email: email,
           Phone: number,
+          Company: company || "", // Company name field
           Description: message || "Contact form submission from Azalea website",
           Lead_Source: "Website",
           Lead_Status: "Not Contacted",
@@ -510,13 +530,14 @@ const handler = async (req, res) => {
 
   try {
     await dbConnect();
-    let { name, email, number, message = "" } = req.body;
+    let { name, email, number, company = "", message = "" } = req.body;
 
     // Validate input
     const { error } = contactValidationSchema.validate({
       name,
       email,
       number,
+      company,
       message,
     });
 
@@ -543,6 +564,7 @@ const handler = async (req, res) => {
       name,
       email,
       number,
+      company,
       message,
     });
 
@@ -556,7 +578,7 @@ const handler = async (req, res) => {
     // Try to sync to Zoho CRM, but don't block the response too long
     try {
       await Promise.race([
-        createZohoContact({ name, email, number, message })
+        createZohoContact({ name, email, number, company, message })
           .then((result) => {
             if (result.success) {
               zohoStatus = "success";
@@ -604,7 +626,7 @@ const handler = async (req, res) => {
           SMTP_MAIL,
           SMTP_MAIL,
           "New Contact Form Submission - Azalea",
-          firmTemplate({ name, email, number, message })
+          firmTemplate({ name, email, number, company, message })
         ),
       ];
 
@@ -636,6 +658,7 @@ const handler = async (req, res) => {
         name,
         email,
         number,
+        company: company || null,
         message: message || null,
         submittedAt: new Date().toISOString(),
       },

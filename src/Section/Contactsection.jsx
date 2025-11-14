@@ -29,6 +29,7 @@ const Contactsection = (props) => {
         name: data.name,
         email: data.email,
         number: data.number,
+        company: data.company || "",
         message: data.message || ""
       }, {
         headers: {
@@ -173,6 +174,25 @@ const Contactsection = (props) => {
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Enter Your Company Name (Optional)"
+              {...register("company", {
+                maxLength: {
+                  value: 100,
+                  message: "Company name must not exceed 100 characters"
+                }
+              })}
+              className={`w-full bg-green-900 text-white placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 ${
+                errors.company ? 'focus:ring-red-500 border border-red-500' : 'focus:ring-[#187530]'
+              }`}
+            />
+            {errors.company && (
+              <p className="text-red-500 text-sm mt-1">{errors.company.message}</p>
             )}
           </div>
 

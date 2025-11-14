@@ -20,6 +20,7 @@ const Mainlayout = (props) => {
       name: "",
       email: "",
       number: "",
+      company: "",
       message: "",
     },
   });
@@ -40,6 +41,7 @@ const Mainlayout = (props) => {
           name: data.name,
           email: data.email,
           number: data.number,
+          company: data.company || "",
           message: data.message || "",
         },
         {
@@ -275,6 +277,40 @@ const Mainlayout = (props) => {
                   {errors.number && (
                     <p className="text-red-500 text-xs mt-1">
                       {errors.number.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Company Field */}
+                <div className="relative">
+                  <label
+                    htmlFor="company"
+                    className="block text-sm font-semibold text-green-900 mb-2"
+                  >
+                    Company Name (Optional)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      id="company"
+                      placeholder="Enter Your Company Name"
+                      {...register("company", {
+                        maxLength: {
+                          value: 100,
+                          message: "Company name must not exceed 100 characters",
+                        },
+                      })}
+                      disabled={isSubmitting}
+                      className={`w-full bg-green-900 text-white placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                        errors.company
+                          ? "focus:ring-red-500 border border-red-500"
+                          : "focus:ring-[#187530]"
+                      }`}
+                    />
+                  </div>
+                  {errors.company && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.company.message}
                     </p>
                   )}
                 </div>
