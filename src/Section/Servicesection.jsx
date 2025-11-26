@@ -31,21 +31,27 @@ const Servicesection = (props) => {
             {
               img: service1,
               icon: FaGlobe,
-              title: "NRI 1st Smart property inventory care for NRIs  secure, documented, and dispute-ready.",
+              title: "NRI 1st",
+              subtitle:
+                "Smart property inventory care for NRIs  secure, documented, and dispute-ready.",
               desc: "Complete Inventory Management for NRIs  End-to-end property documentation, valuation, and digitization designed for NRIs. With transparent reporting, chain-of-custody clarity, and dispute-ready evidence, we protect your assets while ensuring peace of mind across borders.",
               path: "/services/nri-property-inventory-management",
             },
             {
               img: service2,
               icon: FaShieldAlt,
-              title: "Azalea Assurance Post-sales support for developers  smooth handovers, happy customers.",
+              title: "Azalea Assurance",
+              subtitle:
+                "Post-sales support for developers  smooth handovers, happy customers.",
               desc: "Post-Sales Support for Developers  Seamless handovers, detailed snag lists, precise documentation, and proactive customer communication  all designed to reduce post-handover friction and strengthen brand trust. We ensure every transition from possession to satisfaction is smooth, structured, and reputation-enhancing.",
               path: "/services/post-sales-services",
             },
             {
               img: service3,
               icon: FaHome,
-              title: "Azalea Harmony End-to-end society management  structured, transparent, and community-focused.",
+              title: "Azalea Harmony",
+              subtitle:
+                "End-to-end society management  structured, transparent, and community-focused.",
               desc: "Comprehensive Society Management Services  Seamless governance for cooperative housing societies  from AGM facilitation and compliance oversight to vendor coordination and transparent record-keeping. We deliver structure, clarity, and harmony to community living.",
               path: "/services/cooperative-housing-society-management",
             },
@@ -62,19 +68,24 @@ const Servicesection = (props) => {
                 alt={item.title}
                 className="rounded-xl mb-4 h-48 w-full object-cover "
               />
-              <div className="mb-2">
-                <div className="flex items-start gap-2">
+              <div className="mb-2 text-left">
+                <div className="flex items-center gap-3">
                   {IconComponent && (
-                    <IconComponent className="text-2xl text-[#187530] flex-shrink-0 mt-1" />
+                    <IconComponent className="text-2xl text-[#187530] flex-shrink-0" />
                   )}
-                  <h3 className="font-bold text-xl text-green-900 flex-1">
+                  <h3 className="font-bold text-xl text-green-900 m-0">
                     {item.title}
                   </h3>
                 </div>
+                {item.subtitle && (
+                  <p className="text-base font-semibold text-[#187530] leading-snug mt-1">
+                    {item.subtitle}
+                  </p>
+                )}
               </div>
               <p className="text-sm text-gray-700">{item.desc}</p>
               {props?.isServiceDisplay && (
-                <div className="mt-5">
+                <div className="mt-5 text-center">
                   <button
                     className="bg-green-900 text-white p-2.5 px-8 text-base cursor-pointer duration-300 transition-all hover:bg-[#c89d47] font-semibold rounded-full"
                     onClick={() => {
@@ -86,7 +97,7 @@ const Servicesection = (props) => {
                 </div>
               )}
               {props?.isServiceNavigation && (
-                <div className="mt-5">
+                <div className="mt-5 text-center">
                   <button
                     className="bg-green-900 text-white p-2.5 px-8 text-base cursor-pointer duration-300 transition-all hover:bg-[#c89d47] font-semibold rounded-full"
                     onClick={() => {
