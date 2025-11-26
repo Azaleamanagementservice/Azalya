@@ -4,6 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import hero1 from "../assets/Hero/image1.jpg";
 import hero2 from "../assets/Hero/image2.jpg";
 import hero3 from "../assets/Hero/image3.jpg";
+import { FaGlobe, FaShieldAlt, FaHome } from "react-icons/fa";
 
 function Hero(props) {
   const data = [
@@ -24,12 +25,24 @@ function Hero(props) {
     nav("/services");
   };
 
+  // Determine icon based on heading content
+  const getIcon = () => {
+    if (!props.heading) return null;
+    if (props.heading.includes("NRI 1st")) return FaGlobe;
+    if (props.heading.includes("Azalea Assurance")) return FaShieldAlt;
+    if (props.heading.includes("Azalea Harmony")) return FaHome;
+    return null;
+  };
+
+  const IconComponent = getIcon();
+
+  // Show carousel for all pages
   return (
     <>
       {/* Hero Section with Auto Carousel and Green Text */}
       <section className="relative">
         <Carousel
-          autoPlay
+          autoPlay={props.isHomepage}
           infiniteLoop
           showThumbs={false}
           showStatus={false}
@@ -56,12 +69,33 @@ function Hero(props) {
               {/* Compact Text Card with reduced blur and drop shadow */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-2 sm:px-4">
                 <div className="bg-white/20 backdrop-blur-[1px] rounded-xl shadow-sm p-4 sm:p-6 md:p-8 w-[95vw] sm:w-[90vw] md:w-auto lg:max-w-3xl lg:mx-auto border border-white/20 drop-shadow-sm">
-                  <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
-                    {data[idx]}
-                  </h1>
-                  <p className="text-gray-200 text-sm md:text-base lg:text-lg max-w-xl mx-auto mb-6 leading-relaxed">
-                    {imageCaptions[idx]}
-                  </p>
+                  {/* Show custom heading/paragraph if provided, otherwise show default */}
+                  {props.heading ? (
+                    <>
+                      <div className="flex items-start gap-2 justify-center mb-4">
+                        {IconComponent && (
+                          <IconComponent className="text-3xl md:text-4xl text-white flex-shrink-0 mt-1" />
+                        )}
+                        <h1 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                          {props.heading}
+                        </h1>
+                      </div>
+                      {props.paragraph && (
+                        <p className="text-gray-200 text-sm md:text-base lg:text-lg max-w-xl mx-auto mb-6 leading-relaxed">
+                          {props.paragraph}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
+                        {data[idx]}
+                      </h1>
+                      <p className="text-gray-200 text-sm md:text-base lg:text-lg max-w-xl mx-auto mb-6 leading-relaxed">
+                        {imageCaptions[idx]}
+                      </p>
+                    </>
+                  )}
                   {props?.isHomepage && (
                     <button
                       onClick={NavigateToService}

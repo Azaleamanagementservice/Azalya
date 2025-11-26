@@ -6,6 +6,7 @@ import { memo } from "react";
 import FaqSection from "../Section/FaqSection";
 import { useDispatch } from "react-redux";
 import { HeadProvider, Link, Meta, Title } from "react-head";
+import { FaBriefcase, FaHardHat, FaUsers, FaShieldAlt, FaGift, FaFileAlt } from "react-icons/fa";
 const CooperativeHousingSocietyManagementPage = () => {
   const disp = useDispatch();
   const toggleOpen = () => {
@@ -24,11 +25,6 @@ const CooperativeHousingSocietyManagementPage = () => {
         {/* Hero Section - Enhanced with engaging visuals */}
         <Hero
           isHomepage={false}
-          heading="Cooperative Housing Society Management"
-          paragraph="Efficient management solutions for cooperative housing societies. Streamline finances, maintenance, security, and community welfare to ensure smooth operations and resident satisfaction."
-          backgroundImage="url('/path-to-attractive-housing-society-image.jpg')" // Add a relevant background image for visual appeal (replace with actual path)
-          ctaButtonText="Get Started Today"
-          ctaButtonLink="/contact"
         />
 
         {/* Service Overview Section - Attractive with animations */}
@@ -57,53 +53,56 @@ const CooperativeHousingSocietyManagementPage = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  icon: "💼",
+                  icon: FaBriefcase,
                   title: "Finance Management",
                   description:
                     "Handle maintenance collections, expenditures, audits, and budgeting efficiently",
                 },
                 {
-                  icon: "🏗️",
+                  icon: FaHardHat,
                   title: "Infrastructure Maintenance",
                   description:
                     "Regular repairs, amenities upkeep, and construction oversight",
                 },
                 {
-                  icon: "👥",
+                  icon: FaUsers,
                   title: "Staff & Vendor Management",
                   description:
                     "Coordinate services like cleaning, plumbing, and vendor tracking",
                 },
                 {
-                  icon: "🛡️",
+                  icon: FaShieldAlt,
                   title: "Security Management",
                   description:
                     "Gate security, CCTV monitoring, and resident safety protocols",
                 },
                 {
-                  icon: "🎉",
+                  icon: FaGift,
                   title: "Community Welfare",
                   description:
                     "Organize events, festivals, and cultural activities for residents",
                 },
                 {
-                  icon: "📝",
+                  icon: FaFileAlt,
                   title: "Complaint & Bill Management",
                   description:
                     "Online tracking of complaints, bills, and payments",
                 },
-              ].map((feature, index) => (
+              ].map((feature, index) => {
+                const IconComponent = feature.icon;
+                return (
                 <div
                   key={index}
                   className="bg-[#f2e9df] p-6 rounded-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
-                  <div className="text-4xl mb-3">{feature.icon}</div>
+                  <div className="text-4xl mb-3"><IconComponent /></div>
                   <h3 className="text-xl font-bold mb-3 text-[#187530]">
                     {feature.title}
                   </h3>
                   <p className="text-gray-600">{feature.description}</p>
                 </div>
-              ))}
+              );
+              })}
             </div>
           </div>
         </section>

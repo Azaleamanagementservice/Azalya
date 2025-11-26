@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import service1 from "../assets/Service/Image 1.jpeg";
 import service2 from "../assets/Service/image 2.jpeg";
 import service3 from "../assets/Service/image 3.jpeg";
-
+import { FaGlobe, FaShieldAlt, FaHome } from "react-icons/fa";
 import { memo } from "react";
 
 const Servicesection = (props) => {
@@ -30,26 +30,31 @@ const Servicesection = (props) => {
           {[
             {
               img: service1,
-              title: "NRI Property Inventory Management ",
-              desc: "End-to-end inventory documentation, valuation, and digitization for NRIs. Transparent reporting, chain-of-custody clarity, and dispute-ready evidence.",
+              icon: FaGlobe,
+              title: "NRI 1st Smart property inventory care for NRIs  secure, documented, and dispute-ready.",
+              desc: "Complete Inventory Management for NRIs  End-to-end property documentation, valuation, and digitization designed for NRIs. With transparent reporting, chain-of-custody clarity, and dispute-ready evidence, we protect your assets while ensuring peace of mind across borders.",
               path: "/services/nri-property-inventory-management",
             },
             {
               img: service2,
-              title: "Post Sales Services Support for Developers ",
-              desc: "Seamless handovers, snag lists, documentation, and customer communication. Reduce post-handover friction and enhance brand trust.",
+              icon: FaShieldAlt,
+              title: "Azalea Assurance Post-sales support for developers  smooth handovers, happy customers.",
+              desc: "Post-Sales Support for Developers  Seamless handovers, detailed snag lists, precise documentation, and proactive customer communication  all designed to reduce post-handover friction and strengthen brand trust. We ensure every transition from possession to satisfaction is smooth, structured, and reputation-enhancing.",
               path: "/services/post-sales-services",
             },
             {
               img: service3,
-              title: "Cooperative Housing Society Management ",
-              desc: "AGM support, compliance, vendor management, and transparent record-keeping. Structure, accountability, and peace of mind for CHS committees.",
+              icon: FaHome,
+              title: "Azalea Harmony End-to-end society management  structured, transparent, and community-focused.",
+              desc: "Comprehensive Society Management Services  Seamless governance for cooperative housing societies  from AGM facilitation and compliance oversight to vendor coordination and transparent record-keeping. We deliver structure, clarity, and harmony to community living.",
               path: "/services/cooperative-housing-society-management",
             },
-          ].map((item, idx) => (
+          ].map((item, idx) => {
+            const IconComponent = item.icon;
+            return (
             <div
               key={idx}
-              className="bg-white p-4 rounded-2xl shadow-md hover:scale-105 duration-500 transition-all cursor-pointer"
+              className="bg-white p-4 rounded-2xl shadow-md hover:scale-105 duration-500 transition-all cursor-pointer text-left"
             >
               <img
                 src={item.img}
@@ -57,9 +62,16 @@ const Servicesection = (props) => {
                 alt={item.title}
                 className="rounded-xl mb-4 h-48 w-full object-cover "
               />
-              <h3 className="font-bold text-xl text-green-900 mb-2">
-                {item.title}
-              </h3>
+              <div className="mb-2">
+                <div className="flex items-start gap-2">
+                  {IconComponent && (
+                    <IconComponent className="text-2xl text-[#187530] flex-shrink-0 mt-1" />
+                  )}
+                  <h3 className="font-bold text-xl text-green-900 flex-1">
+                    {item.title}
+                  </h3>
+                </div>
+              </div>
               <p className="text-sm text-gray-700">{item.desc}</p>
               {props?.isServiceDisplay && (
                 <div className="mt-5">
@@ -86,7 +98,8 @@ const Servicesection = (props) => {
                 </div>
               )}
             </div>
-          ))}
+          );
+          })}
         </div>
       </section>
     </section>

@@ -6,6 +6,7 @@ import { memo } from "react";
 import FaqSection from "../Section/FaqSection";
 import { useDispatch } from "react-redux";
 import { HeadProvider, Link, Meta, Title } from "react-head";
+import { FaUsers, FaDollarSign, FaPhone, FaHome, FaHandshake } from "react-icons/fa";
 const PostSalesServicesPage = () => {
     const disp=useDispatch()
      const toggleOpen = () => {
@@ -23,11 +24,6 @@ const PostSalesServicesPage = () => {
       {/* Hero Section - Enhanced with engaging visuals */}
       <Hero
         isHomepage={false}
-        heading="Post-Sales Services Support for Developers"
-        paragraph="Comprehensive post-sales support solutions for real estate developers. Streamline customer onboarding, collections, loan assistance, and possession strategies to ensure seamless experiences and long-term client satisfaction."
-        backgroundImage="url('/path-to-attractive-developer-support-image.jpg')" // Add a relevant background image for visual appeal (replace with actual path)
-        ctaButtonText="Get Started Today"
-        ctaButtonLink="/contact"
       />
 
       {/* Service Overview Section - Attractive with animations */}
@@ -56,53 +52,56 @@ const PostSalesServicesPage = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                icon: "👥",
+                icon: FaUsers,
                 title: "Customer Onboarding",
                 description:
                   "Smooth integration of new clients with personalized guidance and setup",
               },
               {
-                icon: "💰",
+                icon: FaDollarSign,
                 title: "Collections & Revenue Management",
                 description:
                   "Efficient payment tracking and revenue optimization strategies",
               },
               {
-                icon: "📞",
+                icon: FaPhone,
                 title: "Grievance & Escalation Handling",
                 description:
                   "Prompt resolution of customer issues to maintain satisfaction",
               },
               // {
-              //   icon: "🏦",
+              //   icon: FaBank,
               //   title: "Home Loan Assistance",
               //   description:
               //     "Expert support for financing and loan processing",
               // },
               {
-                icon: "🏡",
+                icon: FaHome,
                 title: "Possession Strategy & Delivery",
                 description:
                   "Seamless handover and residence delivery execution",
               },
               {
-                icon: "🤝",
+                icon: FaHandshake,
                 title: "Loyalty Management",
                 description:
                   "Programs to foster long-term client relationships and repeat business",
               },
-            ].map((feature, index) => (
+            ].map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
               <div
                 key={index}
                 className="bg-[#f2e9df] p-6 rounded-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
-                <div className="text-4xl mb-3">{feature.icon}</div>
+                <div className="text-4xl mb-3"><IconComponent /></div>
                 <h3 className="text-xl font-bold mb-3 text-[#187530]">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600">{feature.description}</p>
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </section>

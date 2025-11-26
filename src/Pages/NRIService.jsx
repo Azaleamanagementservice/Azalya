@@ -6,6 +6,7 @@ import { memo } from "react";
 import FaqSection from "../Section/FaqSection";
 import { useDispatch } from "react-redux";
 import { HeadProvider, Link, Meta, Title } from "react-head";
+import { FaClipboard, FaSearch, FaMobileAlt, FaTools, FaHome, FaShieldAlt } from "react-icons/fa";
 const NRIPropertyInventoryPage = () => {
   const disp = useDispatch();
   const toggleOpen = () => {
@@ -25,12 +26,6 @@ const NRIPropertyInventoryPage = () => {
         {/* Hero Section - Enhanced with more engaging visuals */}
         <Hero
           isHomepage={false}
-          heading="NRI Property Inventory Management"
-          paragraph="Comprehensive property inventory solutions for Non-Resident Indians. Professional documentation, regular inspections, and detailed reporting to keep your Indian property investments secure and well-maintained."
-          // Assuming Hero component supports background images or additional props for attractiveness
-          backgroundImage="url('/path-to-attractive-property-image.jpg')" // Add a relevant background image for visual appeal (replace with actual path)
-          ctaButtonText="Get Started Today" // Add a CTA button to attract users
-          ctaButtonLink="/contact" // Link to contact for immediate engagement
         />
 
         {/* Service Overview Section - Made more attractive with subtle animations and centered content */}
@@ -63,56 +58,59 @@ const NRIPropertyInventoryPage = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  icon: "📋", // Added emoji icons for visual appeal (can replace with actual icons)
+                  icon: FaClipboard,
                   title: "Detailed Property Documentation",
                   description:
                     "Comprehensive inventory of all fixtures, fittings, and amenities with professional cataloging",
                 },
                 {
-                  icon: "🔍",
+                  icon: FaSearch,
                   title: "Regular Inspection Reports",
                   description:
                     "Monthly and quarterly property condition assessments with photographic evidence",
                 },
                 {
-                  icon: "📱",
+                  icon: FaMobileAlt,
                   title: "Digital Asset Tracking",
                   description:
                     "Advanced photo documentation and digital cataloging system for easy access",
                 },
                 {
-                  icon: "🛠️",
+                  icon: FaTools,
                   title: "Maintenance Scheduling",
                   description:
                     "Proactive maintenance alerts and scheduling to preserve property value",
                 },
                 {
-                  icon: "🏠",
+                  icon: FaHome,
                   title: "Tenant Handover Management",
                   description:
                     "Complete inventory management during tenant transitions and lease agreements",
                 },
                 {
-                  icon: "🛡️",
+                  icon: FaShieldAlt,
                   title: "Insurance Documentation",
                   description:
                     "Detailed records for insurance claims and coverage verification support",
                 },
-              ].map((feature, index) => (
+              ].map((feature, index) => {
+                const IconComponent = feature.icon;
+                return (
                 <div
                   key={index}
                   className="bg-[#f2e9df] p-6 rounded-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
                   {" "}
                   {/* Enhanced hover effects */}
-                  <div className="text-4xl mb-3">{feature.icon}</div>{" "}
+                  <div className="text-4xl mb-3"><IconComponent /></div>{" "}
                   {/* Icon for attraction */}
                   <h3 className="text-xl font-bold mb-3 text-[#187530]">
                     {feature.title}
                   </h3>
                   <p className="text-gray-600">{feature.description}</p>
                 </div>
-              ))}
+              );
+              })}
             </div>
           </div>
         </section>

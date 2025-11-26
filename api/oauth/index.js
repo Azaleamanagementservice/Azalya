@@ -88,6 +88,18 @@ const handler = async (req, res) => {
           h1 {
             color: #187530;
           }
+          .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            margin-right: 8px;
+            vertical-align: middle;
+          }
+          .icon svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+          }
           .info {
             background: #d1ecf1;
             border: 1px solid #bee5eb;
@@ -145,7 +157,7 @@ const handler = async (req, res) => {
       </head>
       <body>
         <div class="container">
-          <h1>🔐 Zoho CRM Authorization</h1>
+          <h1><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span> Zoho CRM Authorization</h1>
           
           <div class="info">
             <p><strong>Welcome!</strong> This page will help you connect your Zoho CRM account.</p>
@@ -165,11 +177,11 @@ const handler = async (req, res) => {
           </div>
 
           <div style="text-align: center;">
-            <a href="${authUrl}" class="btn">🚀 Authorize Zoho CRM</a>
+            <a href="${authUrl}" class="btn"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg></span> Authorize Zoho CRM</a>
           </div>
 
           <div class="warning">
-            <p><strong>⚠️ Important Notes:</strong></p>
+            <p><strong><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span> Important Notes:</strong></p>
             <ul>
               <li>Make sure your Zoho API Console has the redirect URI set to: <code>https://www.azaleaservices.co.in/oauth/callback</code></li>
               <li>The refresh token will be shown only once - save it securely!</li>
@@ -178,7 +190,7 @@ const handler = async (req, res) => {
           </div>
 
           <details style="margin-top: 30px;">
-            <summary style="cursor: pointer; font-weight: bold; margin-bottom: 10px;">📋 Authorization URL (for reference)</summary>
+            <summary style="cursor: pointer; font-weight: bold; margin-bottom: 10px;"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path></svg></span> Authorization URL (for reference)</summary>
             <div class="url-box">${authUrl}</div>
           </details>
         </div>

@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
-import Image from "../assets/OurCertificate/Image1.jpg"
+import Image from "../assets/OurCertificate/Image1.jpg";
+import { FaBuilding, FaStar, FaTrophy, FaMedal, FaLeaf } from "react-icons/fa";
 const CertificatesSection = () => {
   const [hoveredCert, setHoveredCert] = useState(null);
 
@@ -10,7 +11,7 @@ const CertificatesSection = () => {
       organization: "Real Estate Regulatory Authority",
       year: "2023",
       description: "Authorized real estate services provider",
-      icon: "🏢",
+      icon: FaBuilding,
       color: "bg-[#187530]",
       height: "h-40"
     },
@@ -20,7 +21,7 @@ const CertificatesSection = () => {
       organization: "Quality Management Systems",
       year: "2023",
       description: "International quality management certification",
-      icon: "⭐",
+      icon: FaStar,
       color: "bg-[#1a5f33]",
       height: "h-48"
     },
@@ -30,7 +31,7 @@ const CertificatesSection = () => {
       organization: "National Property Management Association",
       year: "2024",
       description: "Outstanding service in property management",
-      icon: "🏆",
+      icon: FaTrophy,
       color: "bg-[#187530]",
       height: "h-56", // Center/tallest certificate
       featured: true
@@ -41,7 +42,7 @@ const CertificatesSection = () => {
       organization: "Service Quality Institute",
       year: "2023",
       description: "Excellence in customer satisfaction",
-      icon: "🎖️",
+      icon: FaMedal,
       color: "bg-[#1a5f33]",
       height: "h-44"
     },
@@ -51,7 +52,7 @@ const CertificatesSection = () => {
       organization: "Indian Green Building Council",
       year: "2024",
       description: "Sustainable property management practices",
-      icon: "🌱",
+      icon: FaLeaf,
       color: "bg-[#187530]",
       height: "h-36"
     }
