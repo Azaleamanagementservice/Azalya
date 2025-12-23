@@ -19,6 +19,19 @@ const PostSalesServicesPage = () => {
             name="description"
             content="Seamless handovers, snag lists, documentation & client communication. Azalea helps developers reduce friction & build stronger trust."
           />
+          <Link
+            rel="canonical"
+            href="https://www.azaleaservices.co.in/services/post-sales-services"
+          />
+          <Meta name="robots" content="index,follow" />
+          <Meta
+            name="keywords"
+            content="developer post-sales support, handover services, snag list management, Azalea Assurance"
+          />
+          <Meta
+            name="publisher"
+            content="Azalea Management Services LLP"
+          />
         </HeadProvider>
     <Mainlayout>
       {/* Hero Section - Enhanced with engaging visuals */}

@@ -20,6 +20,19 @@ const CooperativeHousingSocietyManagementPage = () => {
           name="description"
           content="AGM support, compliance, vendor management & transparent record-keeping. Azalea ensures accountability & smooth CHS operations."
         />
+        <Link
+          rel="canonical"
+          href="https://www.azaleaservices.co.in/services/cooperative-housing-society-management"
+        />
+        <Meta name="robots" content="index,follow" />
+        <Meta
+          name="keywords"
+          content="cooperative housing society management, CHS governance, AGM support, vendor management"
+        />
+        <Meta
+          name="publisher"
+          content="Azalea Management Services LLP"
+        />
       </HeadProvider>
       <Mainlayout>
         {/* Hero Section - Enhanced with engaging visuals */}

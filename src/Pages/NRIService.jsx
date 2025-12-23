@@ -20,6 +20,19 @@ const NRIPropertyInventoryPage = () => {
           name="description"
           content="End-to-end property documentation, valuation & digitization for NRIs. Transparent reporting, dispute-ready evidence & complete peace of mind."
         />
+        <Link
+          rel="canonical"
+          href="https://www.azaleaservices.co.in/services/nri-property-inventory-management"
+        />
+        <Meta name="robots" content="index,follow" />
+        <Meta
+          name="keywords"
+          content="NRI property inventory management, NRI documentation, property valuation for NRIs, Azalea NRI services"
+        />
+        <Meta
+          name="publisher"
+          content="Azalea Management Services LLP"
+        />
       </HeadProvider>
 
       <Mainlayout>

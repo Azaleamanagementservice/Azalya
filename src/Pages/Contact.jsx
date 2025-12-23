@@ -14,6 +14,19 @@ function Contact() {
           name="description"
           content="Connect with Azalea Services today for expert property, developer & society management solutions. Request your free consultation now."
         />
+        <Link
+          rel="canonical"
+          href="https://www.azaleaservices.co.in/contact"
+        />
+        <Meta name="robots" content="index,follow" />
+        <Meta
+          name="keywords"
+          content="contact Azalea Services, book consultation, property management contact, society management inquiry"
+        />
+        <Meta
+          name="publisher"
+          content="Azalea Management Services LLP"
+        />
       </HeadProvider>
 
       <Mainlayout>

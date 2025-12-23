@@ -27,6 +27,16 @@ const Home = () => {
           name="description"
           content="Azalea Services offers NRI property management, developer post-sales support & cooperative housing society solutions with trust & transparency."
         />
+        <Link rel="canonical" href="https://www.azaleaservices.co.in/" />
+        <Meta name="robots" content="index,follow" />
+        <Meta
+          name="keywords"
+          content="Azalea Services, NRI property management, developer post-sales support, cooperative housing society management, Thane property services"
+        />
+        <Meta
+          name="publisher"
+          content="Azalea Management Services LLP"
+        />
       </HeadProvider>
       <Mainlayout>
         {/* hero */}

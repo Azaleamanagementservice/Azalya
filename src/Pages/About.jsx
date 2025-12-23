@@ -15,6 +15,16 @@ function About() {
             name="description"
             content="Learn about Azalea Services—our expertise in property inventory, developer support & housing society management for NRIs & communities."
           />
+          <Link rel="canonical" href="https://www.azaleaservices.co.in/about" />
+          <Meta name="robots" content="index,follow" />
+          <Meta
+            name="keywords"
+            content="About Azalea Services, property inventory experts, developer support, housing society management, NRI property services"
+          />
+          <Meta
+            name="publisher"
+            content="Azalea Management Services LLP"
+          />
         </HeadProvider>
     <Mainlayout>
       <Hero

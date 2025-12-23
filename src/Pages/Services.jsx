@@ -14,6 +14,16 @@ const Services = () => {
           name="description"
           content="Explore Azalea Services: NRI property inventory management, developer post-sales support & cooperative housing society solutions."
         />
+        <Link rel="canonical" href="https://www.azaleaservices.co.in/services" />
+        <Meta name="robots" content="index,follow" />
+        <Meta
+          name="keywords"
+          content="Azalea services list, NRI property inventory, developer post-sales services, society management services"
+        />
+        <Meta
+          name="publisher"
+          content="Azalea Management Services LLP"
+        />
       </HeadProvider>
   
     <Mainlayout>
