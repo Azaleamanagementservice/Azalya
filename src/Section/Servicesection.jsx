@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import service1 from "../assets/Service/Image 1.jpeg";
 import service2 from "../assets/Service/image 2.jpeg";
-import service3 from "../assets/Service/image 3.jpeg";
+import service3 from "../assets/Service/Image5.png";
 import { FaGlobe, FaShieldAlt, FaHome } from "react-icons/fa";
 import { memo } from "react";
 
@@ -33,7 +33,7 @@ const Servicesection = (props) => {
               icon: FaGlobe,
               title: "NRI 1st",
               subtitle:
-                "Smart property inventory care for NRIs  secure, documented, and dispute-ready.",
+                "Smart property inventory care for NRIs.",
               desc: "Complete Inventory Management for NRIs  End-to-end property documentation, valuation, and digitization designed for NRIs. With transparent reporting, chain-of-custody clarity, and dispute-ready evidence, we protect your assets while ensuring peace of mind across borders.",
               path: "/services/nri-property-inventory-management",
             },

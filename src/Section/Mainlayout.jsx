@@ -10,6 +10,60 @@ const Mainlayout = (props) => {
   const isDialogOpen = useSelector((state) => state.isDialogOpen);
   const dispatch = useDispatch();
 
+  // JSON-LD schema for SEO
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.azaleaservices.co.in/#organization",
+        name: "Azalea Management Services LLP",
+        url: "https://www.azaleaservices.co.in",
+        sameAs: [
+          "https://www.linkedin.com/company/azalea-management-services-llp/",
+          "https://www.facebook.com/profile.php?id=61579217911251",
+          "https://www.instagram.com/azaleamanagementservices"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.azaleaservices.co.in/#website",
+        url: "https://www.azaleaservices.co.in",
+        name: "Azalea Services",
+        publisher: {
+          "@id": "https://www.azaleaservices.co.in/#organization"
+        }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.azaleaservices.co.in/services/nri-property-inventory-management",
+        name: "NRI 1st – Smart property inventory care for NRIs",
+        description: "Smart property inventory care for NRIs.",
+        provider: {
+          "@id": "https://www.azaleaservices.co.in/#organization"
+        }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.azaleaservices.co.in/services/post-sales-services",
+        name: "Azalea Assurance – Post-sales support for developers",
+        description: "Post-sales support for developers with smooth handovers and happy customers.",
+        provider: {
+          "@id": "https://www.azaleaservices.co.in/#organization"
+        }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.azaleaservices.co.in/services/cooperative-housing-society-management",
+        name: "Azalea Harmony – Cooperative housing society management",
+        description: "End-to-end society management that is structured, transparent, and community-focused.",
+        provider: {
+          "@id": "https://www.azaleaservices.co.in/#organization"
+        }
+      }
+    ]
+  };
+
   const {
     register,
     handleSubmit,
@@ -122,6 +176,10 @@ const Mainlayout = (props) => {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       <Navbar />
       {props.children}
       <Footer />

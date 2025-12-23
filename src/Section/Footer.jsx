@@ -28,7 +28,7 @@ const Footer = () => {
               />
               <h2 className="text-base font-semibold">
                 {" "}
-                Your Property, Our Priority—with Care and Clarity.
+                Your Property, Our Priority with Care and Clarity.
               </h2>
               <p className="text-gray-700 text-sm leading-relaxed mb-6">
                 Azalea Management Services LLP is a Start Up India certified

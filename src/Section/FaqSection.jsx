@@ -7,12 +7,12 @@ const FAQSection = () => {
     {
       question: "What is Azalea Management Services LLP?",
       answer:
-        "Azalea is a Start Up India certified firm delivering end to end property management solutions for NRIs, developers, and cooperative housing societies. From inventory and valuation to site coordination, compliance, post-handover support, and CHS governance—we manage every aspect with structure, accountability, and trust.",
+        "Azalea is a Start Up India certified firm delivering end to end property management solutions for NRIs, developers, and cooperative housing societies. From inventory and valuation to site coordination, compliance, post-handover support, and CHS governance we manage every aspect with structure, accountability, and trust.",
     },
     {
       question: "Who can benefit from Azalea's services?",
       answer:
-        "• NRIs seeking complete property assistance—including documentation, digitization, valuation, coordination, and dispute-prepared reporting\n• Developers looking for seamless post sales service execution\n• CHS committees aiming for compliant governance, vendor control, and record transparency",
+        "• NRIs seeking complete property assistance including documentation, digitization, valuation, coordination, and dispute-prepared reporting\n• Developers looking for seamless post sales service execution\n• CHS committees aiming for compliant governance, vendor control, and record transparency",
     },
     {
       question: "What makes Azalea different from other service providers?",
