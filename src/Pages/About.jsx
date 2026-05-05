@@ -122,7 +122,7 @@ function About() {
         <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-green-900  mb-12">
           Our Team
         </h3>
-        <div className="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
           {[
             {
               name: "Sanket Shailendra Kalke",
