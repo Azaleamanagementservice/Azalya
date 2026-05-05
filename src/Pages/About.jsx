@@ -129,14 +129,14 @@ function About() {
               role: "Founder, Managing Partner",
               image: Image1,
               description:
-                "Guiding Azalea with a shared belief in innovation, integrity, and community-focused leadership.",
+                "With over 25 years of experience in the real estate industry, Sanket leads Azalea with deep expertise in operations, SOP development, and strategic planning. He is responsible for building scalable systems, optimizing processes, and driving operational efficiency to ensure consistent and high-quality property management solutions.",
             },
             {
               name: "Savita Shailendra Kalke",
               role: "Director",
               image: Image2,
               description:
-                "Advancing Azalea’s mission through innovation, integrity, and community-focused leadership.",
+                "With more than 30 years of professional experience in HR, administration, and accounts, Savita oversees internal governance, financial discipline, and administrative control. She ensures ethical practices, compliance, and a structured, people-centric work environment.",
             },
             {
               name: "Sameer S. Pendharkar",
