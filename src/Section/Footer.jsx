@@ -74,8 +74,7 @@ const Footer = () => {
                     href="https://maps.app.goo.gl/Nzqbd45jDDkHQfJ86"
                     className="text-sm hover:underline hover:text-green-900 cursor-pointer text-gray-700 leading-relaxed"
                   >
-                    12/28-B, Rajdeep Vrindavan CHSL, Vrindavan Society Phase I,
-                    Thane, Maharashtra 400601, India
+                    102/A, SHREE THANE DARSHAN SOC, TEKADI BANGALOW, NEAR TEEN PETROL PUMP, PACHPAKHADI, Naupada (Thane), Thane, Thane, Maharashtra, India, 400602
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
