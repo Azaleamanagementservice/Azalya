@@ -141,6 +141,7 @@ function About() {
             {
               name: "Sameer S. Pendharkar",
               role: "Partner – Sales & Marketing",
+              image: Image3,
               description: "With 8+ years of experience in sales, marketing, and public relations, Sameer leads business development and client engagement initiatives. He focuses on expanding market presence, strengthening client relationships, and enhancing Azalea’s brand positioning in property management solutions.",
             },
           ].map((member, i) => (
