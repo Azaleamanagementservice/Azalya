@@ -5,6 +5,7 @@ import Aboutsection from "../Section/About";
 import Hero from "../Section/Hero";
 import Image1 from "../assets/Team/Member1.jpeg";
 import Image2 from "../assets/Team/Member2.jpeg";
+import Image3 from "../assets/Team/Member3.jpeg";
 import Mainlayout from "../Section/Mainlayout";
 import { HeadProvider, Link, Meta, Title } from "react-head";
 function About() {
@@ -136,6 +137,11 @@ function About() {
               image: Image2,
               description:
                 "Advancing Azalea’s mission through innovation, integrity, and community-focused leadership.",
+            },
+            {
+              name: "Sameer S. Pendharkar",
+              role: "Partner – Sales & Marketing",
+              description: "With 8+ years of experience in sales, marketing, and public relations, Sameer leads business development and client engagement initiatives. He focuses on expanding market presence, strengthening client relationships, and enhancing Azalea’s brand positioning in property management solutions.",
             },
           ].map((member, i) => (
             <div
