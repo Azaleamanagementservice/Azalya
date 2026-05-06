@@ -245,7 +245,7 @@ const Contactsection = (props) => {
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#187530] mb-6 text-center">Our Location</h3>
           <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-md">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3767.6808073840143!2d72.9839167!3d19.209138900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTnCsDEyJzMyLjkiTiA3MsKwNTknMDIuMSJF!5e0!3m2!1sen!2sin!4v1755005198612!5m2!1sen!2sin"
+              src="https://www.google.com/maps/place/Shree+Thane+Darshan,+2,+Dharamaveer+Marg,+Panch,+Panch+Pakhadi,+Thane,+Maharashtra+400602/@19.1939911,72.9694787,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b91883ca7375:0xc85c59c809acfc1a!8m2!3d19.1939911!4d72.9694787!16s%2Fg%2F11x6rh0mn5!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
               width="100%"
               height="100%"
               allowFullScreen=""
