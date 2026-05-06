@@ -71,7 +71,7 @@ const Footer = () => {
                     size={14}
                   />
                   <a
-                    href="https://maps.app.goo.gl/Nzqbd45jDDkHQfJ86"
+                    href="https://maps.app.goo.gl/Y9Np7a6BTeKeKs3D8?g_st=aw"
                     className="text-sm hover:underline hover:text-green-900 cursor-pointer text-gray-700 leading-relaxed"
                   >
                     102/A, SHREE THANE DARSHAN SOC, TEKADI BANGALOW, NEAR TEEN PETROL PUMP, PACHPAKHADI, Naupada (Thane), Thane, Thane, Maharashtra, India, 400602
@@ -95,8 +95,7 @@ const Footer = () => {
                     size={14}
                   />
                   <a
-                    href="mailto:
-connect@azaleaservices.co.in"
+                    href="mailto:connect@azaleaservices.co.in"
                     className="text-sm hover:underline text-gray-700 hover:text-green-900 transition-colors duration-200"
                   >
                     connect@azaleaservices.co.in
