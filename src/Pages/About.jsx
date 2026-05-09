@@ -125,14 +125,14 @@ function About() {
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
           {[
             {
-              name: "Sanket Shailendra Kalke",
+              name: "Sanket S. Kalke",
               role: "Founder, Managing Partner",
               image: Image1,
               description:
                 "With over 25 years of experience in the real estate industry, Sanket leads Azalea with deep expertise in operations, SOP development, and strategic planning. He is responsible for building scalable systems, optimizing processes, and driving operational efficiency to ensure consistent and high-quality property management solutions.",
             },
             {
-              name: "Savita Shailendra Kalke",
+              name: "Savita S. Kalke",
               role: "Director",
               image: Image2,
               description:
